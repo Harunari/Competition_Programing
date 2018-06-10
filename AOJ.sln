@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALDS1_6_B", "ALDS1_6_B\ALDS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALDS1_7_A", "ALDS1_7_A\ALDS1_7_A.csproj", "{6D3809CD-FF94-4F10-B970-12776F7B4253}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALDS1_7_B", "ALDS1_7_B\ALDS1_7_B.csproj", "{627659E1-86C9-46BF-9665-431913B2E001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtHell", "DebtHell\DebtHell.csproj", "{6C2AA4AE-4853-40BD-BC00-53925FD30AD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{6D3809CD-FF94-4F10-B970-12776F7B4253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D3809CD-FF94-4F10-B970-12776F7B4253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D3809CD-FF94-4F10-B970-12776F7B4253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{627659E1-86C9-46BF-9665-431913B2E001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{627659E1-86C9-46BF-9665-431913B2E001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{627659E1-86C9-46BF-9665-431913B2E001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{627659E1-86C9-46BF-9665-431913B2E001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C2AA4AE-4853-40BD-BC00-53925FD30AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C2AA4AE-4853-40BD-BC00-53925FD30AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C2AA4AE-4853-40BD-BC00-53925FD30AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C2AA4AE-4853-40BD-BC00-53925FD30AD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

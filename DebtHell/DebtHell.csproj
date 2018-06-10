@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6D3809CD-FF94-4F10-B970-12776F7B4253}</ProjectGuid>
+    <ProjectGuid>{6C2AA4AE-4853-40BD-BC00-53925FD30AD1}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ALDS1_7_A</RootNamespace>
-    <AssemblyName>ALDS1_7_A</AssemblyName>
+    <RootNamespace>DebtHell</RootNamespace>
+    <AssemblyName>DebtHell</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
