@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace Sample
+namespace Get_AC
 {
     class Program
     {
