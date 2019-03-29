@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace Get_AC
 {
@@ -24,6 +25,13 @@ namespace Get_AC
             Console.SetOut(sw);
         }
         public void Dispose() { Console.Out.Flush(); }
+    }
+
+    static class IOUtilities
+    {
+        static int[] StringToIntArray(this string str) =>
+            str.Split().Select(int.Parse).ToArray();
+        static int ToInt(this string str) => int.Parse(str);
     }
 
 
