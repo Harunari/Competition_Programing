@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace Get_AC
+namespace Pyramid
 {
     class Program
     {
@@ -12,7 +12,39 @@ namespace Get_AC
         {
             using (var sc = new SetConsole())
             {
-                Console.WriteLine("Hello World");
+                int n = GetIntInput();
+                var xyh = new int[3];
+                var list = new List<int[]>();
+                for (int i = 0; i < n; i++)
+                {
+                    var tmp = Console.ReadLine().Split().Select(int.Parse).ToArray();
+                    if (tmp[2] != 0)
+                    {
+                        xyh = tmp;
+                    }
+                    list.Add(tmp);
+                }
+                
+                bool result = false;
+                for (int i = 0; i <= 100; i++)
+                {
+                    for (int j = 0; j <= 100; j++)
+                    {
+                        int expH = Math.Abs(xyh[0] - i) + Math.Abs(xyh[1] - j) + xyh[2];
+                        var flg = true;
+                        for (int k = 0; k < list.Count; k++)
+                        {
+                            if (list[k][2] != Math.Max(expH - Math.Abs(list[k][0] - i) - Math.Abs(list[k][1] - j), 0))
+                            {
+                                flg = false;
+                                break;
+                            }
+                        }
+                        if (flg && expH >= 1) { Console.WriteLine($"{i} {j} {expH}"); result = true; break; }
+
+                    }
+                    if (result) { break; }
+                }
             }
         }
 
@@ -27,7 +59,7 @@ namespace Get_AC
     {
         public SetConsole()
         {
-            var sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = false };
+            var sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
             Console.SetOut(sw);
         }
         public void Dispose()
@@ -57,18 +89,20 @@ namespace Get_AC
                     {
                         var sw = new Stopwatch();
                         sw.Start();
-                        Program.Main(null);
+                        Program.Main2(null);
                         sw.Stop();
                         records.Add(sw.ElapsedMilliseconds);
                         sw.Reset();
                     }
-                    var s = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
-                    Console.SetOut(s);
+
                 }
                 catch (Exception ex)
                 {
+                    var s = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
+                    Console.SetOut(s);
                     Console.WriteLine(ex.ToString());
                     Console.WriteLine("Process was supended");
+                    Console.ReadLine();
                     break;
                 }
                 if (records.Any())
