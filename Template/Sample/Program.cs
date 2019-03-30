@@ -15,6 +15,10 @@ namespace Get_AC
             }
         }
 
+        static int[] GetArrayInput() => Console.ReadLine().StringToIntArray();
+        static int GetNumberInput() => Console.ReadLine().ToInt();
+        static void CWrite(string str) => Console.WriteLine(str);
+
     }
 
     class SetConsole : IDisposable
@@ -27,11 +31,11 @@ namespace Get_AC
         public void Dispose() { Console.Out.Flush(); }
     }
 
-    static class IOUtilities
+    static class ExtentionsLibrary
     {
-        static int[] StringToIntArray(this string str) =>
+        public static int[] StringToIntArray(this string str) =>
             str.Split().Select(int.Parse).ToArray();
-        static int ToInt(this string str) => int.Parse(str);
+        public static int ToInt(this string str) => int.Parse(str);
     }
 
 
