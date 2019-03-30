@@ -12,7 +12,7 @@ namespace Get_AC
         {
             using (var sc = new SetConsole())
             {
-                Console.WriteLine("Hello World");
+                CWrite("Hello World");
             }
         }
 
@@ -25,14 +25,17 @@ namespace Get_AC
 
     class SetConsole : IDisposable
     {
+        StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
         public SetConsole()
         {
-            var sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = false };
+            sw.AutoFlush = false;
             Console.SetOut(sw);
         }
         public void Dispose()
         {
             Console.Out.Flush();
+            sw.AutoFlush = true;
+            Console.SetOut(sw);
         }
     }
 
@@ -62,14 +65,11 @@ namespace Get_AC
                         records.Add(sw.ElapsedMilliseconds);
                         sw.Reset();
                     }
-                    var s = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
-                    Console.SetOut(s);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    Console.WriteLine(ex);
                     Console.WriteLine("Process was supended");
-                    break;
                 }
                 if (records.Any())
                 {
