@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace Get_AC
+namespace Sample
 {
     class Program
     {
@@ -13,6 +13,7 @@ namespace Get_AC
             using (var sc = new SetConsole())
             {
                 CWrite("Hello World");
+                GetArrayCharInput();
             }
         }
 
@@ -23,9 +24,11 @@ namespace Get_AC
 
     }
 
+
+
     class SetConsole : IDisposable
     {
-        StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
+        readonly StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
         public SetConsole()
         {
             sw.AutoFlush = false;
@@ -69,11 +72,16 @@ namespace Get_AC
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
+                    Console.WriteLine("\n====================");
                     Console.WriteLine("Process was supended");
+                    Console.WriteLine("====================\n");
                 }
                 if (records.Any())
                 {
+                    Console.WriteLine("\n====================");
+                    Console.WriteLine($"Time is {records.Last()}ms");
                     Console.WriteLine($"AveTime is {records.Average()}ms");
+                    Console.WriteLine("====================\n");
                 }
             }
         }
