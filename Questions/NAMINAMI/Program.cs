@@ -97,7 +97,6 @@ namespace NAMINAMI
             }
         }
 
-        static string[] GetArrayCharInput() => Console.ReadLine().Split();
         static int[] GetArrayIntInput() => Console.ReadLine().StringToIntArray();
         static int GetIntInput() => Console.ReadLine().ToInt();
         static void CWrite<T>(T str) => Console.WriteLine(str);
