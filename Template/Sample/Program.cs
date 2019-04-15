@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using static System.Math;
 
 namespace Sample
 {
@@ -13,15 +14,35 @@ namespace Sample
             using (var sc = new SetConsole())
             {
                 CWrite("Hello World");
-                GetArrayCharInput();
+                var input = GetArray<char>();
+                CWrite($"{input[0]} {input[1]}");
             }
         }
 
-        static string[] GetArrayCharInput() => Console.ReadLine().Split();
-        static int[] GetArrayIntInput() => Console.ReadLine().StringToIntArray();
-        static int GetIntInput() => Console.ReadLine().ToInt();
-        static void CWrite(string str) => Console.WriteLine(str);
-
+        static void CWrite<T>(T str) => Console.WriteLine(str);
+        static string GetString() => Console.ReadLine();
+        static T[] GetArray<T>()
+        {
+            var t = typeof(T);
+            var str = Console.ReadLine();
+            if (t == typeof(string))
+            {
+                return (T[])(object)str.Split();
+            }
+            if (t == typeof(int))
+            {
+                return (T[])(object)str.ToNumArray<T>();
+            }
+            if (t == typeof(long))
+            {
+                return (T[])(object)str.ToNumArray<T>();
+            }
+            if (t == typeof(double))
+            {
+                return (T[])(object)str.ToNumArray<T>();
+            }
+            throw new NotSupportedException($"{t} is not supported.");
+        }
     }
 
 
@@ -44,8 +65,24 @@ namespace Sample
 
     static class ExtentionsLibrary
     {
-        public static int[] StringToIntArray(this string str) =>
-            str.Split().Select(int.Parse).ToArray();
+        public static T[] ToNumArray<T>(this string str)
+        {
+            var t = typeof(T);
+            if (t == typeof(int))
+            {
+                return (T[])(object)str.Split().Select(int.Parse).ToArray();
+            }
+            if (t == typeof(long))
+            {
+                return (T[])(object)str.Split().Select(long.Parse).ToArray();
+            }
+            if (t == typeof(double))
+            {
+                return (T[])(object)str.Split().Select(double.Parse).ToArray();
+            }
+            throw new NotSupportedException();
+        }
+
         public static int ToInt(this string str) => int.Parse(str);
     }
 
