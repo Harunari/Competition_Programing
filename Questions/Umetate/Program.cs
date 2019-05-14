@@ -5,51 +5,49 @@ using System.IO;
 using System.Linq;
 using static System.Math;
 
-namespace Sample
+namespace Umetate
 {
-    public class Program
+    class Program
     {
         public static int[] xd = new int[] { 1, 0, 0, -1 };
         public static int[] yd = new int[] { 0, 1, -1, 0 };
 
         public static void Main(string[] args)
         {
-            using (var sc = new SetConsole()) { Solve(); }
-        }
-
-        public static void Solve()
-        {
-            // [x, y]
-            var map = new bool[12, 12];
-            for (int y = 1; y <= 10; y++)
+            using (var sc = new SetConsole())
             {
-                var row = GetString();
-                for (int x = 1; x <= 10; x++)
+                // [x, y]
+                var map = new bool[12, 12];
+                for (int y = 1; y <= 10; y++)
                 {
-                    map[x, y] = row[x - 1] == 'o' ? true : false;
-                }
-            }
-
-            for (int y = 1; y <= 10; y++)
-            {
-                for (int x = 1; x <= 10; x++)
-                {
-                    if (map[x, y]) { continue; }
-                    var newMap = new bool[12, 12];
-                    Array.Copy(map, newMap, 12 * 12);
-                    DFS(newMap, x, y);
-                    var flag = false;
-                    for (int i = 1; i <= 10; i++)
+                    var row = GetString();
+                    for (int x = 1; x <= 10; x++)
                     {
-                        for (int j = 1; j <= 10; j++)
-                        {
-                            flag = flag ? true : newMap[i, j];
-                        }
+                        map[x, y] = row[x - 1] == 'o' ? true : false;
                     }
-                    if (!flag) { CWrite("YES"); return; }
                 }
+
+                for (int y = 1; y <= 10; y++)
+                {
+                    for (int x = 1; x <= 10; x++)
+                    {
+                        if (map[x, y]) { continue; }
+                        var newMap = new bool[12, 12];
+                        Array.Copy(map, newMap, 12 * 12);
+                        DFS(newMap, x, y);
+                        var flag = false;
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            for (int j = 1; j <= 10; j++)
+                            {
+                                flag = flag ? true : newMap[i, j];
+                            }
+                        }
+                        if (!flag) { CWrite("YES"); return; }
+                    }
+                }
+                CWrite("NO");
             }
-            CWrite("NO");
         }
 
         private static void DFS(bool[,] map, int x, int y)
@@ -117,20 +115,6 @@ namespace Sample
 
     static class ExtentionsLibrary
     {
-        public static T[] CopyArray<T>(this T[] array)
-        {
-            var newArray = new T[array.Length];
-            Array.Copy(array, newArray, array.Length);
-            return newArray;
-        }
-        public static T[,] CopyTwoDimensionalArray<T>(this T[,] dArray)
-        {
-            var firstDimentionLength = dArray.GetLength(0);
-            var secondDimentionLength = dArray.GetLength(1);
-            var newDArray = new T[firstDimentionLength, secondDimentionLength];
-            Array.Copy(dArray, newDArray, firstDimentionLength * secondDimentionLength);
-            return newDArray;
-        }
         public static T[] ToNumArray<T>(this string str)
         {
             var t = typeof(T);

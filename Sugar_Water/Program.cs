@@ -3,71 +3,48 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using static System.Math;
 
-namespace Sample
+namespace Sugar_Water
 {
-    public class Program
+    class Program
     {
-        public static int[] xd = new int[] { 1, 0, 0, -1 };
-        public static int[] yd = new int[] { 0, 1, -1, 0 };
-
         public static void Main(string[] args)
         {
-            using (var sc = new SetConsole()) { Solve(); }
-        }
-
-        public static void Solve()
-        {
-            // [x, y]
-            var map = new bool[12, 12];
-            for (int y = 1; y <= 10; y++)
+            using (var sc = new SetConsole())
             {
-                var row = GetString();
-                for (int x = 1; x <= 10; x++)
-                {
-                    map[x, y] = row[x - 1] == 'o' ? true : false;
-                }
-            }
+                var abcdef = GetArray<int>();
+                var a = abcdef[0];
+                var b = abcdef[1];
+                var c = abcdef[2];
+                var d = abcdef[3];
+                var e = abcdef[4];
+                var limitedPercent = e * 100.0 / (e + 100);
+                var f = abcdef[5];
 
-            for (int y = 1; y <= 10; y++)
-            {
-                for (int x = 1; x <= 10; x++)
+                var xs = new List<int>();
+                var ys = new List<int>();
+                for (int i = 0; i < f; i++)
                 {
-                    if (map[x, y]) { continue; }
-                    var newMap = new bool[12, 12];
-                    Array.Copy(map, newMap, 12 * 12);
-                    DFS(newMap, x, y);
-                    var flag = false;
-                    for (int i = 1; i <= 10; i++)
+                    for (int j = 0; j < f; j++)
                     {
-                        for (int j = 1; j <= 10; j++)
-                        {
-                            flag = flag ? true : newMap[i, j];
-                        }
-                    }
-                    if (!flag) { CWrite("YES"); return; }
-                }
-            }
-            CWrite("NO");
-        }
-
-        private static void DFS(bool[,] map, int x, int y)
-        {
-            // x, y
-            var stk = new Stack<int[]>();
-            stk.Push(new int[] { x, y });
-            while (stk.Any())
-            {
-                var xy = stk.Pop();
-                map[xy[0], xy[1]] = false;
-                for (int i = 0; i < xd.Length; i++)
-                {
-                    if (map[xy[0] + xd[i], xy[1] + yd[i]])
-                    {
-                        stk.Push(new int[] { xy[0] + xd[i], xy[1] + yd[i] });
+                        int x = a * 100 * i + b * 100 * j;
+                        int y = c * i + d * j;
+                        if (f >= x && x != 0) { xs.Add(x); }
+                        if (f > y) { ys.Add(y); }
                     }
                 }
+
+                var pairs = new List<Tuple<int, int>>();
+                foreach (var x in xs)
+                {
+                    foreach (var y in ys)
+                    {
+                        double percent = y * 100.0 / (x + y);
+                        if (limitedPercent >= percent && f >= x + y) { pairs.Add(Tuple.Create(y, x)); }
+                    }
+                }
+                var densitiest = pairs.Aggregate((acc, p) => (p.Item1 * 100.0 / (p.Item1 + p.Item2)) > acc.Item1 * 100.0 / (acc.Item1 + acc.Item2) ? p : acc);
+                CWrite($"{densitiest.Item2 + densitiest.Item1} {densitiest.Item1}");
             }
         }
 
@@ -117,20 +94,6 @@ namespace Sample
 
     static class ExtentionsLibrary
     {
-        public static T[] CopyArray<T>(this T[] array)
-        {
-            var newArray = new T[array.Length];
-            Array.Copy(array, newArray, array.Length);
-            return newArray;
-        }
-        public static T[,] CopyTwoDimensionalArray<T>(this T[,] dArray)
-        {
-            var firstDimentionLength = dArray.GetLength(0);
-            var secondDimentionLength = dArray.GetLength(1);
-            var newDArray = new T[firstDimentionLength, secondDimentionLength];
-            Array.Copy(dArray, newDArray, firstDimentionLength * secondDimentionLength);
-            return newDArray;
-        }
         public static T[] ToNumArray<T>(this string str)
         {
             var t = typeof(T);
@@ -149,8 +112,6 @@ namespace Sample
             throw new NotSupportedException();
         }
         public static int ToInt(this string str) => int.Parse(str);
-        public static int ToInt(this char chr) => int.Parse(chr.ToString());
-        public static long ToLong(this string str) => long.Parse(str);
     }
 
     // 提出の際はこちらをコピペしない

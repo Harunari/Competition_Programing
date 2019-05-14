@@ -5,69 +5,51 @@ using System.IO;
 using System.Linq;
 using static System.Math;
 
-namespace Sample
+namespace _20190420
 {
-    public class Program
+    class Program
     {
-        public static int[] xd = new int[] { 1, 0, 0, -1 };
-        public static int[] yd = new int[] { 0, 1, -1, 0 };
-
         public static void Main(string[] args)
         {
-            using (var sc = new SetConsole()) { Solve(); }
-        }
-
-        public static void Solve()
-        {
-            // [x, y]
-            var map = new bool[12, 12];
-            for (int y = 1; y <= 10; y++)
+            using (var sc = new SetConsole())
             {
-                var row = GetString();
-                for (int x = 1; x <= 10; x++)
+                int n = GetString().ToInt();
+                var str = GetString();
+                int count = 0;
+                var flg = false;
+                var prev = -1;
+                for (int i = 0; i < n; i++)
                 {
-                    map[x, y] = row[x - 1] == 'o' ? true : false;
+                    
                 }
-            }
-
-            for (int y = 1; y <= 10; y++)
-            {
-                for (int x = 1; x <= 10; x++)
+                int charge = 0;
+                for (int i = 0; i < n - 1; i++)
                 {
-                    if (map[x, y]) { continue; }
-                    var newMap = new bool[12, 12];
-                    Array.Copy(map, newMap, 12 * 12);
-                    DFS(newMap, x, y);
-                    var flag = false;
-                    for (int i = 1; i <= 10; i++)
+                    if (str[i] == '#' && str[i + 1] == '#')
                     {
-                        for (int j = 1; j <= 10; j++)
+                        charge++;
+                    }
+                    else if (str[i] == '#' && str[i + 1] == '.')
+                    {
+                        count = charge != 0 ? charge : 1;
+                        if (flg && prev == i - 1)
                         {
-                            flag = flag ? true : newMap[i, j];
+                            count--;
+                            flg = false;
                         }
+                        else
+                        {
+                            flg = true;
+                        }
+                        prev = i + 1;
+                        charge = 0;
                     }
-                    if (!flag) { CWrite("YES"); return; }
-                }
-            }
-            CWrite("NO");
-        }
-
-        private static void DFS(bool[,] map, int x, int y)
-        {
-            // x, y
-            var stk = new Stack<int[]>();
-            stk.Push(new int[] { x, y });
-            while (stk.Any())
-            {
-                var xy = stk.Pop();
-                map[xy[0], xy[1]] = false;
-                for (int i = 0; i < xd.Length; i++)
-                {
-                    if (map[xy[0] + xd[i], xy[1] + yd[i]])
+                    else
                     {
-                        stk.Push(new int[] { xy[0] + xd[i], xy[1] + yd[i] });
+                        charge = 0;
                     }
                 }
+                CWrite(count);
             }
         }
 
@@ -97,8 +79,6 @@ namespace Sample
         }
     }
 
-
-
     class SetConsole : IDisposable
     {
         readonly StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
@@ -114,23 +94,8 @@ namespace Sample
             Console.SetOut(sw);
         }
     }
-
     static class ExtentionsLibrary
     {
-        public static T[] CopyArray<T>(this T[] array)
-        {
-            var newArray = new T[array.Length];
-            Array.Copy(array, newArray, array.Length);
-            return newArray;
-        }
-        public static T[,] CopyTwoDimensionalArray<T>(this T[,] dArray)
-        {
-            var firstDimentionLength = dArray.GetLength(0);
-            var secondDimentionLength = dArray.GetLength(1);
-            var newDArray = new T[firstDimentionLength, secondDimentionLength];
-            Array.Copy(dArray, newDArray, firstDimentionLength * secondDimentionLength);
-            return newDArray;
-        }
         public static T[] ToNumArray<T>(this string str)
         {
             var t = typeof(T);
@@ -149,8 +114,6 @@ namespace Sample
             throw new NotSupportedException();
         }
         public static int ToInt(this string str) => int.Parse(str);
-        public static int ToInt(this char chr) => int.Parse(chr.ToString());
-        public static long ToLong(this string str) => long.Parse(str);
     }
 
     // 提出の際はこちらをコピペしない
