@@ -2,51 +2,49 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using static System.Math;
 
 namespace Sample
 {
-    public class Program
+    public sealed class Program : BaseProgram
     {
         public static void Main(string[] args)
         {
             using (var sc = new SetConsole()) { Solve(); }
         }
-
-        public static void Solve()
+        private static void Solve()
         {
-            var s = GetString();
-
+            
         }
+    }
 
-        static void CWrite<T>(T str) => Console.WriteLine(str);
-        static string GetString() => Console.ReadLine();
-        static T[] GetArray<T>()
+    public class BaseProgram
+    {
+        protected static void CWrite<T>(T str) => Console.WriteLine(str);
+        protected static string GetString() => Console.ReadLine();
+        protected static T[] GetArray<T>()
         {
             var str = Console.ReadLine();
-            if (str == null) { throw new ArgumentNullException("標準入力がnullです 解答がおかしいはずです"); }
+            if (str == null) { throw new NullReferenceException("標準入力がnullです Solveメソッド内の解答コードが間違っています"); }
             return str.ToArray<T>();
         }
-    }
-
-
-
-    class SetConsole : IDisposable
-    {
-        readonly StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
-        public SetConsole()
+        protected class SetConsole : IDisposable
         {
-            sw.AutoFlush = false;
-            Console.SetOut(sw);
-        }
-        public void Dispose()
-        {
-            Console.Out.Flush();
-            sw.AutoFlush = true;
-            Console.SetOut(sw);
+            readonly StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
+            public SetConsole()
+            {
+                sw.AutoFlush = false;
+                Console.SetOut(sw);
+            }
+            public void Dispose()
+            {
+                Console.Out.Flush();
+                sw.AutoFlush = true;
+                Console.SetOut(sw);
+            }
         }
     }
-
     static class ExtentionsLibrary
     {
         public static T[] CopyArray<T>(this T[] array)
@@ -82,11 +80,17 @@ namespace Sample
             {
                 return (T[])(object)str.Split().Select(double.Parse).ToArray();
             }
+            if (t == typeof(BigInteger))
+            {
+                return (T[])(object)str.Split().Select(BigInteger.Parse).ToArray();
+            }
             throw new NotSupportedException();
         }
         public static int ToInt(this string str) => int.Parse(str);
         public static int ToInt(this char chr) => int.Parse(chr.ToString());
         public static long ToLong(this string str) => long.Parse(str);
+        public static double ToDouble(this string str) => double.Parse(str);
+        public static BigInteger ToBigInteger(this string str) => BigInteger.Parse(str);
         public static DateTime ToDateTime(this string str) => DateTime.Parse(str);
     }
 }
