@@ -25,6 +25,12 @@ namespace SampleTest
             AssertInOut(Input3, Output3);
         }
 
+        //[Fact]
+        public void Test4()
+        {
+            AssertInOut(Input4, Output4);
+        }
+
         internal void AssertInOut(string inputFileName, string outputFileName)
         {
             using (var input = new StreamReader(inputFileName))

@@ -15,4 +15,18 @@ public class Algorithm
         } while (tmp != 0);
         return a;
     }
+    public static IEnumerable<int> GetDivisors(int num)
+    {
+        yield return 1;
+        yield return num;
+        for (int i = 2; i <= Pow(num, 0.5); i++)
+        {
+            if (num % i == 0)
+            {
+                yield return i;
+                int div = num / i;
+                if (i != div) { yield return div; }
+            }
+        }
+    }
 }

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using static System.Math;
 
-namespace Sample
+namespace Digits_in_Multiplication
 {
     public class Program
     {
@@ -15,17 +15,54 @@ namespace Sample
 
         public static void Solve()
         {
-            var s = GetString();
+            var n = GetString().ToLong();
+            var divsors = GetDivisors(n).ToArray();
+            var list = new List<long>();
+            for (int i = 0; i < divsors.Length; i += 2)
+            {
+                list.Add(Max(divsors[i], divsors[i + 1]));
+            }
+            CWrite(list.Min().ToString().Length);
+        }
 
+        static IEnumerable<long> GetDivisors(long num)
+        {
+            yield return 1;
+            yield return num;
+            for (long i = 2; i <= Pow(num, 0.5); i++)
+            {
+                if (num % i == 0)
+                {
+                    yield return i;
+                    yield return num / i;
+                }
+            }
         }
 
         static void CWrite<T>(T str) => Console.WriteLine(str);
         static string GetString() => Console.ReadLine();
         static T[] GetArray<T>()
         {
+            var t = typeof(T);
             var str = Console.ReadLine();
-            if (str == null) { throw new ArgumentNullException("標準入力がnullです 解答がおかしいはずです"); }
-            return str.ToArray<T>();
+
+            if (t == typeof(string))
+            {
+                return (T[])(object)str.Split();
+            }
+            if (t == typeof(int))
+            {
+                return (T[])(object)str.ToNumArray<T>();
+            }
+            if (t == typeof(long))
+            {
+                return (T[])(object)str.ToNumArray<T>();
+            }
+            if (t == typeof(double))
+            {
+                return (T[])(object)str.ToNumArray<T>();
+            }
+            throw new NotSupportedException($"{t} is not supported.");
         }
     }
 
@@ -63,13 +100,9 @@ namespace Sample
             Array.Copy(array, newDArray, firstDimentionLength * secondDimentionLength);
             return newDArray;
         }
-        public static T[] ToArray<T>(this string str)
+        public static T[] ToNumArray<T>(this string str)
         {
             var t = typeof(T);
-            if (t == typeof(string))
-            {
-                return (T[])(object)str.Split();
-            }
             if (t == typeof(int))
             {
                 return (T[])(object)str.Split().Select(int.Parse).ToArray();

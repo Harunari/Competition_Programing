@@ -1,49 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using static System.Math;
 
-namespace Sample
+namespace Write_and_Erase
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            using (var sc = new SetConsole()) { Solve(); }
-        }
-
-        public static void Solve()
-        {
-            var s = GetString();
-
+            int n = GetString().ToInt();
+            var nums = new Dictionary<int, bool>();
+            for (int i = 0; i < n; i++)
+            {
+                int a = GetString().ToInt();
+                if (nums.ContainsKey(a)) { nums.Remove(a); continue; }
+                nums.Add(a, true);
+            }
+            CWrite(nums.Count);
         }
 
         static void CWrite<T>(T str) => Console.WriteLine(str);
         static string GetString() => Console.ReadLine();
         static T[] GetArray<T>()
         {
+            var t = typeof(T);
             var str = Console.ReadLine();
-            if (str == null) { throw new ArgumentNullException("標準入力がnullです 解答がおかしいはずです"); }
-            return str.ToArray<T>();
-        }
-    }
 
-
-
-    class SetConsole : IDisposable
-    {
-        readonly StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
-        public SetConsole()
-        {
-            sw.AutoFlush = false;
-            Console.SetOut(sw);
-        }
-        public void Dispose()
-        {
-            Console.Out.Flush();
-            sw.AutoFlush = true;
-            Console.SetOut(sw);
+            if (t == typeof(string))
+            {
+                return (T[])(object)str.Split();
+            }
+            if (t == typeof(int))
+            {
+                return (T[])(object)str.ToNumArray<T>();
+            }
+            if (t == typeof(long))
+            {
+                return (T[])(object)str.ToNumArray<T>();
+            }
+            if (t == typeof(double))
+            {
+                return (T[])(object)str.ToNumArray<T>();
+            }
+            throw new NotSupportedException($"{t} is not supported.");
         }
     }
 
@@ -63,13 +62,9 @@ namespace Sample
             Array.Copy(array, newDArray, firstDimentionLength * secondDimentionLength);
             return newDArray;
         }
-        public static T[] ToArray<T>(this string str)
+        public static T[] ToNumArray<T>(this string str)
         {
             var t = typeof(T);
-            if (t == typeof(string))
-            {
-                return (T[])(object)str.Split();
-            }
             if (t == typeof(int))
             {
                 return (T[])(object)str.Split().Select(int.Parse).ToArray();

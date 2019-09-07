@@ -1,10 +1,1 @@
-﻿xxxxxxxxxx
-xoooooooxx
-xxoooooxxx
-xxxoooxxxx
-xxxxxxxxxx
-xxxxxxxxxx
-xxxxxxxxxx
-xxxoooxxxx
-xxoooooxxx
-xxxxxxxxxx
+﻿100000 31 41 28
